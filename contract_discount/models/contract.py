@@ -11,14 +11,15 @@ from openerp.osv import fields as old_fields
 class AccountAnalyticInvoiceLine(models.Model):
     _inherit = "account.analytic.invoice.line"
 
-    def _amount_line(self, cr, uid, ids, prop, unknow_none, unknow_dict,
-                     context=None):
-        res = super(AccountAnalyticInvoiceLine, self)._amount_line(
-            cr, uid, ids, prop, unknow_none, unknow_dict, context=context)
-        for line in self.browse(cr, uid, ids, context=context):
-            discount = (line.discount or 0) / 100
-            res[line.id] = res[line.id] * (1 - discount)
-        return res
+    @api.one
+    @api.depends('price_unit', 'quantity', 'discount')
+    def _amount_line(self):
+        self.price_subtotal = self.quantity * (self.price_unit * (1 - (self.discount or 0.0) / 100.0))
+
+    price_subtotal = fields.Float(
+        compute='_amount_line',
+        string='Sub Total',
+        digits=dp.get_precision('Account'))
 
     discount = fields.Float(
         string='Discount (%)',
@@ -26,13 +27,6 @@ class AccountAnalyticInvoiceLine(models.Model):
         copy=True,
         help='Discount that is applied in generated invoices.'
         ' It should be less or equal to 100')
-
-    _columns = {
-        'price_subtotal': old_fields.function(
-            _amount_line, string='Sub Total',
-            type="float",
-            digits_compute=dp.get_precision('Account')),
-    }
 
     @api.one
     @api.constrains('discount')

@@ -24,7 +24,7 @@
     'name': 'Contract Discount',
     'summary': 'Discounts for contracts and their invoices',
     'version': '8.0.1.0.0',
-    'author': 'Domatix, Odoo Community Association (OCA)',
+    'author': 'Domatix,BCIM,Odoo Community Association (OCA)',
     'website': 'http://www.domatix.com',
     'depends': ['account_analytic_analysis'],
     'category': 'Sales Management',

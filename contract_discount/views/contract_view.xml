@@ -9,7 +9,7 @@
             <field name="inherit_id"
                 ref="account_analytic_analysis.account_analytic_account_form_form" />
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='price_unit']" position="after">
+                <xpath expr="//field[@name='recurring_invoice_line_ids']/tree/field[@name='price_unit']" position="after">
                     <field name="discount" groups="sale.group_discount_per_so_line" />
                 </xpath>
             </field>

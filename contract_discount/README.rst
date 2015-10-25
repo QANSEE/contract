@@ -42,6 +42,7 @@ Contributors
 ------------
 
 * Ángel Moya <angel.moya@domatix.com>
+* Jacques-Etienne Baudoux <je@bcim.be>
 
 
 Maintainer
